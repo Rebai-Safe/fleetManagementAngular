@@ -1,0 +1,215 @@
+<mat-toolbar>
+    <span>Ajouter vehicule</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- template Driven form-->
+        <form #formulaire='ngForm' class="my-form">
+            <!--FORM FIELDS HERE-->
+
+
+            <!-- row1-->
+            <mat-toolbar class="small-toolbar ">
+                <span>infos génerales</span>
+            </mat-toolbar>
+
+            <mat-form-field class="full-width ">
+                <mat-label>immatriculation</mat-label>
+                <input matInput placeholder="111tu1111 " [(ngModel)]="vehicule.immatriculation " name="immatriculation " #immatriculation='ngModel' pattern="[0-9]{3}[t|T][u|U][0-9]{4}" required>
+                <!-- template reference variable-->
+                <mat-error *ngIf="immatriculation.invalid && (immatriculation.dirty || immatriculation.touched)">Immatriculation Invalide</mat-error>
+            </mat-form-field>
+
+            &nbsp; &nbsp;
+
+            <mat-form-field class="full-width ">
+                <mat-label>coutAcquisition</mat-label>
+                <input matInput placeholder="111.111 DT " [(ngModel)]="vehicule.coutAcquisition " name="coutAcquisition " #coutAcquisition='ngModel' pattern="[0-9]{2,3}.[0-9]{2,3}" required>
+
+                <mat-error *ngIf="coutAcquisition.invalid ">cout d'acquisition Invalide</mat-error>
+            </mat-form-field>
+
+            &nbsp; &nbsp;
+
+            <mat-form-field>
+                <input matInput [matDatepicker]="dateAcquisition " placeholder="Date d'acquisition" [(ngModel)]="vehicule.dateAcquisition" name="dateAcquisition" required>
+                <mat-datepicker-toggle matSuffix [for]="dateAcquisition"></mat-datepicker-toggle>
+                <mat-datepicker #dateAcquisition></mat-datepicker>
+            </mat-form-field>
+            &nbsp; &nbsp;
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Date mise en circulation" [(ngModel)]="vehicule.dateMiseCirculation" name="dateMiseCirculation" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <!--row2 Détails techniques -->
+            <br>
+
+            <mat-toolbar class="small-toolbar">
+                <span>Détails techniques</span>
+            </mat-toolbar>
+
+
+            <mat-form-field class="full-width">
+                <mat-label>numeroMoteur</mat-label>
+                <input matInput placeholder="numeroMoteur" [(ngModel)]="vehicule.numeroMoteur" name="numeroMoteur" #numeroMoteur='ngModel' pattern="[0-9]{3,}">
+                <mat-error *ngIf="numeroMoteur.invalid">numeroMoteur Invalide</mat-error>
+            </mat-form-field>
+            &nbsp; &nbsp;
+
+            <mat-form-field class="full-width">
+                <mat-label>numeroChassis</mat-label>
+                <input matInput placeholder="numeroChassis" [(ngModel)]="vehicule.numeroChassis" name="numeroChassis" #numeroChassis='ngModel' pattern="[0-9]{3,}">
+                <mat-error *ngIf="numeroChassis.invalid">numeroChassis Invalide</mat-error>
+            </mat-form-field>
+
+
+            &nbsp; &nbsp;
+            <mat-form-field class="full-width">
+                <mat-label>puissance</mat-label>
+                <input matInput placeholder="111CH" [(ngModel)]="vehicule.puissance" name="puissance" #puissance='ngModel' pattern="[0-9]{2,3}">
+                <mat-error *ngIf="puissance.invalid">puissance Invalide</mat-error>
+            </mat-form-field>
+
+
+            &nbsp; &nbsp;
+
+            <mat-form-field class="full-width">
+                <mat-label>poid</mat-label>
+                <input matInput placeholder="1111KG" [(ngModel)]="vehicule.poid" name="poid" #poid='ngModel' pattern="[0-9]{3,4}">
+                <mat-error *ngIf="poid.invalid">poid Invalide</mat-error>
+            </mat-form-field>
+
+            <!-- row3 Détails techniques-->
+            <br>
+
+
+
+            <mat-form-field>
+                <mat-label>Type Boite vitesse</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let typeBoite of typesBoite" [value]="typeBoite" (click)="selectBoiteVitesse(typeBoite)">
+                        {{typeBoite.libelleBoite}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            &nbsp; &nbsp;
+            <mat-form-field>
+                <mat-label>Type Carburant</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let typeCarburant of typescarburant" [value]="typeCarburant" (click)="selectCarburant(typeCarburant)">
+                        {{typeCarburant.libelle_carburant}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            &nbsp; &nbsp;
+            <!--marque-->
+            <mat-form-field>
+                <mat-label>Marque</mat-label>
+                <mat-select name="listeMarque" #listeMarque='ngModel' [(ngModel)]="marque">
+                    <mat-option *ngFor="let marqueVehicule of marquesVehicule" [value]="marqueVehicule" (click)="getModeles(marqueVehicule)">
+                        {{marqueVehicule.libelleMarque}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- modele (waits for marque to be chosen)-->
+            &nbsp; &nbsp;
+            <mat-form-field>
+                <mat-label>Modéle</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let modele of modelesVehicule" [value]="modele" (click)="selectModele(modele)">
+                        {{modele?.libelleModele}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+
+            <br>
+            <!-- row4 Etat-->
+            <!-- join fields -->
+            <mat-toolbar class="small-toolbar">
+                <span>Etat</span>
+            </mat-toolbar>
+
+            <mat-form-field>
+                <mat-label>Etat du vehicule</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let etat of etatsVehicule" [value]="etat" (click)="selectEtat(etat)">
+                        {{etat.libelleEtat}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            &nbsp; &nbsp;
+
+            <mat-form-field class="full-width">
+                <mat-label>kilometrage Actuel</mat-label>
+                <input matInput placeholder="1111Km" [(ngModel)]="vehicule.kilometrageActuel" name="kilometrageActuel" #kilometrage='ngModel' pattern="[0-9]{3,4}">
+                <mat-error *ngIf="kilometrage.invalid">kilométrage Invalide</mat-error>
+            </mat-form-field>
+
+
+
+
+
+
+
+
+            <br>
+            <!-- row4 Assurance-->
+            <!-- join fields -->
+
+            <mat-toolbar class="small-toolbar">
+                <span>Assurance</span>
+            </mat-toolbar>
+
+            <mat-form-field>
+                <mat-label>Assurance</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let compagnie of compagniesAssurance" [value]="compagnie" (click)="selectCompagnie(compagnie)">
+                        {{compagnie.libelleAssurance}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            &nbsp; &nbsp;
+
+            <mat-form-field>
+                <mat-label>idTypeContratAssurance</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let typeContrat of typesContratAssurance" [value]="typeContrat" (click)="selectContrat(typeContrat)">
+                        {{typeContrat.libelle_assurance}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            &nbsp; &nbsp;
+
+
+
+
+
+            <br>
+
+
+
+
+        </form>
+    </mat-card-content>
+
+    <!-- action-->
+    <mat-card-actions>
+        <!--REGISTER BUTTON HERE-->
+        <button mat-raised-button [disabled]="!formulaire.valid" (click)="add(formulaire)" color="primary">Ajouter</button>
+        <button mat-raised-button (click)="annuler()" color="warn">Annuler</button>
+
+
+    </mat-card-actions>
+
+
+</mat-card>

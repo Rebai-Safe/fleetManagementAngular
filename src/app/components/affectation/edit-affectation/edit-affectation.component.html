@@ -1,0 +1,74 @@
+<mat-toolbar>
+    <span>Modifier affectation</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- template Driven form-->
+        <form #formulaire='ngForm' class="my-form">
+            <!--FORM FIELDS HERE-->
+
+
+
+
+
+            <br>
+            <mat-form-field>
+                <input matInput [matDatepicker]="dateDeb" placeholder="Date debut" [(ngModel)]="affectation.dateDebut" name="dateDebi" #dateDebi='ngModel' (blur)="getDispo()" required>
+                <mat-datepicker-toggle matSuffix [for]="dateDeb"></mat-datepicker-toggle>
+                <mat-datepicker #dateDeb></mat-datepicker>
+                <mat-error *ngIf="dateDebi.invalid">Veuillez entrer la date du début</mat-error>
+            </mat-form-field>
+
+            <br>
+            <mat-form-field>
+                <input matInput [matDatepicker]="dateFin" placeholder="Date Fin" [(ngModel)]="affectation.dateFin" name="dateFini" #dateFini='ngModel' required>
+                <mat-datepicker-toggle matSuffix [for]="dateFin"></mat-datepicker-toggle>
+                <mat-datepicker #dateFin></mat-datepicker>
+                <mat-error *ngIf="dateFini.invalid">Veuillez entrer la date de la fin </mat-error>
+            </mat-form-field>
+
+
+            <br>
+            <!--vehicules disponibles-->
+            <mat-form-field>
+                <mat-label>Vehicule</mat-label>
+                <mat-select name="liste" #liste='ngModel' [(ngModel)]="affectation.idVehicule" required>
+                    <mat-option *ngFor="let vehicule of vehicules" [value]="vehicule">
+                        {{vehicule.immatriculation}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="dateDebi.invalid">Veuillez choisir la date d'abord </mat-error>
+            </mat-form-field>
+
+            <br>
+            <!--chauffeurs disponible-->
+            <mat-form-field>
+                <mat-label>Chauffeur</mat-label>
+                <mat-select name="listeCH" #listeCH='ngModel' [(ngModel)]="affectation.idChauffeur" required>
+                    <mat-option *ngFor="let chauffeur of chauffeurs" [value]="chauffeur">
+                        {{chauffeur.nom}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+
+
+
+
+
+
+
+
+        </form>
+    </mat-card-content>
+
+    <!-- action-->
+    <mat-card-actions>
+        <!--REGISTER BUTTON HERE-->
+        <button mat-raised-button [disabled]="!formulaire.valid" (click)="save(formulaire)" color="primary">Ajouter</button>
+        <button mat-raised-button (click)="annuler()" color="warn">Annuler</button>
+    </mat-card-actions>
+
+
+</mat-card>

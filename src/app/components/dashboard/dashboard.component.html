@@ -1,0 +1,52 @@
+<div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="20px" class="stats-cards">
+    <mat-card fxFlex="25" style="background-color:#D1C4E9 ; width :200px;height:100px;">
+        <p style="text-align: center;color:white;"> {{nbVehicules}} <br><br> Véhicules
+        </p>
+    </mat-card>
+    <mat-card fxFlex="25" style="background-color:#BBDEFB ;width :200px;height:100px;">
+        <p style="text-align: center;color:white;"> {{nbChauffeurs}} <br><br> Chauffeurs </p>
+    </mat-card>
+    <mat-card fxFlex="25" style="background-color:#C8E6C9 ;width :200px;height:100px;">
+        <p style="text-align: center;color:white;"> {{globalCost}}0 Dt <br><br> Cout globale</p>
+    </mat-card>
+    <mat-card fxFlex="25" style="background-color:rgb(195, 199, 156) ;width :200px;height:100px;">
+        <p style="text-align: center;color:white;"> {{nbVehiculesPanne}} <br><br> Véhicules en panne </p>
+    </mat-card>
+</div>
+<br>
+<mat-divider></mat-divider>
+<br>
+
+<div fxLayout="row">
+    <div fxFlex="50">
+        <app-pie-chart></app-pie-chart>
+    </div>
+    <!-- list of expires licences-->
+    <div fxFlex="50" style="margin-left:5%">
+        <mat-toolbar style="background-color:#f44336 ;height: 50px;width: 100%;">
+            <span style="color: white ">Permis expirées</span>
+        </mat-toolbar>
+
+        <mat-selection-list #permis style="background-color: white; ">
+            <mat-list-option *ngFor="let chauffeur of chauffeurs " (click)="editChauffeur(chauffeur)">
+                {{chauffeur.nom}} &nbsp; {{chauffeur.prenom}}
+
+
+            </mat-list-option>
+        </mat-selection-list>
+
+    </div>
+
+</div>
+
+
+
+
+
+<br>
+
+
+
+<br>
+
+<mat-divider></mat-divider>

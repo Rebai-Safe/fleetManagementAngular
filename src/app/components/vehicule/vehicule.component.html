@@ -1,0 +1,93 @@
+<br>
+<button mat-raised-button routerLink="/ajouterVehicule" color="primary">Ajouter un vehicule</button> &nbsp;
+<button mat-raised-button (click)="downloadPdf()" color="primary">Exporter la liste</button>
+<br><br>
+<mat-divider></mat-divider>
+<!-- filter -->
+
+
+<mat-form-field style="float:right">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Chercher" color="primary">
+</mat-form-field>
+
+
+<!-- data table-->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- immatriculation Column -->
+    <ng-container matColumnDef="immatriculation">
+        <th mat-header-cell *matHeaderCellDef> Immatriculation </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule.immatriculation}} </td>
+    </ng-container>
+
+    <!-- idMarque Column -->
+    <ng-container matColumnDef="idMarque">
+        <th mat-header-cell *matHeaderCellDef> Marque </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule.idModele?.idMarque?.libelleMarque}} </td>
+    </ng-container>
+
+
+    <!-- idModele Column -->
+    <ng-container matColumnDef="idModele">
+        <th mat-header-cell *matHeaderCellDef> Modéle </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule.idModele?.libelleModele}} </td>
+    </ng-container>
+
+    <!-- Etat Column -->
+    <ng-container matColumnDef="idEtat">
+        <th mat-header-cell *matHeaderCellDef> Etat </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule?.idEtat?.libelleEtat}} </td>
+    </ng-container>
+
+
+
+
+
+    <!-- dateAcquisition Column -->
+    <ng-container matColumnDef="dateAcquisitionAcquisition">
+        <th mat-header-cell *matHeaderCellDef> Date d'acquisition </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule.dateAcquisition}} </td>
+    </ng-container>
+
+
+    <!-- coutAcquisition Column -->
+    <ng-container matColumnDef="coutAcquisition">
+        <th mat-header-cell *matHeaderCellDef> cout Acquisition </th>
+        <td mat-cell *matCellDef="let vehicule"> {{vehicule.coutAcquisition}}0 DT</td>
+    </ng-container>
+
+
+
+    <!-- -->
+    <!-- idTypeContratAssurance Column -->
+    <ng-container matColumnDef="idTypeContratAssurance">
+        <th mat-header-cell *matHeaderCellDef> Type Contrat Assurance </th>
+        <td mat-cell *matCellDef="let vehicule"> {{ vehicule?.idTypeContratAssurance?.libelle_assurance}} </td>
+    </ng-container>
+
+
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let vehicule">
+            <button mat-stroked-button color="primary" (click)="editVehicule(vehicule)">Détails</button> &nbsp;
+            <button mat-stroked-button color="warn" (click)="openDialog(vehicule.idVehicule)">Supprimer</button>
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<mat-paginator #paginator [pageSizeOptions]="[3,6,10]" showFirstLastButtons></mat-paginator>
+
+
+
+
+<mat-divider></mat-divider>

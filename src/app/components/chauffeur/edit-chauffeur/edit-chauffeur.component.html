@@ -1,0 +1,60 @@
+<mat-toolbar>
+    <span>Modifier Chauffeur</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <!-- template Driven form-->
+        <form #formulaire='ngForm' class="my-form">
+            <!--FORM FIELDS HERE-->
+
+
+
+
+            <mat-form-field class="full-width ">
+                <mat-label>Cin</mat-label>
+                <input matInput placeholder="11111111" [(ngModel)]="chauffeur.cin" name="cin" #cin='ngModel' pattern="[0-9]{8}" required>
+                <!-- template reference variable-->
+                <mat-error *ngIf="cin.invalid && (cin.dirty || cin.touched)">Cin Invalide</mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field class="full-width ">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="xxxxxx" [(ngModel)]="chauffeur.nom" name="nom" #nom='ngModel' pattern="[a-zA-Z]*" required>
+                <!-- template reference variable-->
+                <mat-error *ngIf="nom.invalid && (nom.dirty || nom.touched)">Nom Invalide</mat-error>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field class="full-width ">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="xxxxxx" [(ngModel)]="chauffeur.prenom" name="prenom" #prenom='ngModel' pattern="[a-zA-Z ]*" required>
+                <!-- template reference variable-->
+                <mat-error *ngIf="prenom.invalid && (prenom.dirty || prenom.touched)">Prenom Invalide</mat-error>
+            </mat-form-field>
+
+            <br>
+            <mat-form-field>
+                <input matInput [matDatepicker]="dateExpr" placeholder="Date d'expiration permis" [(ngModel)]="chauffeur.dateValiditePermis" name="dateExpr" required>
+                <mat-datepicker-toggle matSuffix [for]="dateExpr"></mat-datepicker-toggle>
+                <mat-datepicker #dateExpr></mat-datepicker>
+            </mat-form-field>
+
+
+
+
+        </form>
+    </mat-card-content>
+
+    <!-- action-->
+    <mat-card-actions>
+        <!--REGISTER BUTTON HERE-->
+        <button mat-raised-button [disabled]="!formulaire.valid" (click)="save(formulaire)" color="primary">Confirmer</button>
+        <button mat-raised-button (click)="annuler()" color="warn">Annuler</button>
+
+    </mat-card-actions>
+
+
+</mat-card>
