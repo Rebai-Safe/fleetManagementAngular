@@ -27,7 +27,7 @@
     "highcharts": "^8.0.4",
     "highcharts-angular": "^2.4.0",
     "jquery": "^3.4.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.4.4",
     "ngx-toastr": "^10.1.0",
     "primeicons": "^2.0.0",
